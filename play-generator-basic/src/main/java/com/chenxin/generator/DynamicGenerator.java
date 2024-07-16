@@ -20,7 +20,7 @@ import java.util.*;
 public class DynamicGenerator {
 
     public static void main(String[] args) throws IOException, TemplateException {
-        String projectPath = System.getProperty("user.dir") + File.separator + "play-generator-basic";
+        String projectPath = System.getProperty("user.dir") + File.separator + "play-generator.sh-basic";
         String inputPath = projectPath + File.separator + "src/main/resources/template/MainTemplate.java.ftl";
         String outputPath = projectPath + File.separator + "MainTemplate.java";
         // 创建数据模型

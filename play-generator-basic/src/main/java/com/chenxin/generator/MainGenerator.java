@@ -15,21 +15,25 @@ import java.io.IOException;
 public class MainGenerator {
 
     public static void main(String[] args) throws TemplateException, IOException {
-        // 静态生成
-        String projectPath = System.getProperty("user.dir");
-        String inputPath = projectPath + File.separator + "play-generator-demo-projects"  + File.separator + "acm-template";
-        String outputPath = projectPath;
-        StaticGenerator.copyFilesByRecursive(inputPath, outputPath);
-
-        // 动态生成
-        String dynamicInputPath = projectPath + File.separator + "play-generator-basic" + File.separator + "src/main/resources/template/MainTemplate.java.ftl";
-        String dynamicOutputPath = projectPath + File.separator + "acm-template/src/main/java/com/chenxin/acm/MainTemplate.java";
         // 创建数据模型
         MainTemplateConfig mainTemplateConfig = new MainTemplateConfig();
         mainTemplateConfig.setAuthor("fcx");
         mainTemplateConfig.setLoop(false);
         mainTemplateConfig.setOutputText("结果是：");
-        DynamicGenerator.doGenerator(dynamicInputPath, dynamicOutputPath, mainTemplateConfig);
+        doGenerator(mainTemplateConfig);
+    }
 
+    public static void doGenerator(Object model) throws TemplateException, IOException {
+        // 静态生成
+        String projectPath = System.getProperty("user.dir");
+        // 整个项目的根路径
+        File file = new File(projectPath).getParentFile();
+        String inputPath =  new File(file, "play-generator.sh-demo-projects/acm-template").getAbsolutePath();
+        String outputPath = projectPath;
+        StaticGenerator.copyFilesByRecursive(inputPath, outputPath);
+        // 动态生成
+        String dynamicInputPath = projectPath + File.separator + "src/main/resources/template/MainTemplate.java.ftl";
+        String dynamicOutputPath = outputPath + File.separator + "acm-template/src/main/java/com/chenxin/acm/MainTemplate.java";
+        DynamicGenerator.doGenerator(dynamicInputPath, dynamicOutputPath, model);
     }
 }
