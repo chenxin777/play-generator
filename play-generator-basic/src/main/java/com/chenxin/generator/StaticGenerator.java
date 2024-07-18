@@ -19,7 +19,7 @@ public class StaticGenerator {
 
     public static void main(String[] args) {
         String projectPath = System.getProperty("user.dir");
-        String inputPath = projectPath + File.separator + "play-generator.sh-demo-projects"  + File.separator + "acm-template";
+        String inputPath = projectPath + File.separator + "play-generator-demo-projects"  + File.separator + "acm-template";
         System.out.println("inputPath: " + inputPath);
         String outputPath = projectPath;
         copyFilesByRecursive(inputPath, outputPath);

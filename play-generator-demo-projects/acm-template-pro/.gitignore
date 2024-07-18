@@ -1,8 +1,5 @@
-### Custom Template
-.idea
-play-generator-basic.iml
-.DS_Store
-generated
+### Custom
+acm-template.iml
 
 ### Java template
 # Compiled class file

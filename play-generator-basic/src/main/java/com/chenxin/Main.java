@@ -12,7 +12,7 @@ public class Main {
 
     public static void main(String[] args) {
         //args = new String[]{"list"};
-        //args = new String[]{"generator.sh", "-l", "-a", "-o"};
+        //args = new String[]{"generator", "-l", "-a", "-o"};
         //args = new String[]{"config"};
         CommandExecutor commandExecutor = new CommandExecutor();
         commandExecutor.doExecute(args);

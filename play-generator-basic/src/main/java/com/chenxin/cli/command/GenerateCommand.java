@@ -15,7 +15,7 @@ import java.util.concurrent.Callable;
  * @date 2024/7/15 18:15
  * @modify
  */
-@Command(name = "generator.sh", mixinStandardHelpOptions = true)
+@Command(name = "generator", mixinStandardHelpOptions = true)
 @Data
 public class GenerateCommand implements Callable<Integer> {
 
