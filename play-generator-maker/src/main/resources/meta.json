@@ -5,9 +5,11 @@
   "version": "1.0",
   "author": "fcx",
   "createTime": "2024-07-07",
+  "isGit": true,
   "fileConfig": {
-    "inputRootPath": "xxx",
-    "outputRootPath": "xxx",
+    "sourceRootPath": "/Users/fangchenxin/Desktop/yupi/code/代码生成/play-generator/play-generator-demo-projects/acm-template-pro",
+    "inputRootPath": "",
+    "outputRootPath": "",
     "type": "dir",
     "files": [
       {

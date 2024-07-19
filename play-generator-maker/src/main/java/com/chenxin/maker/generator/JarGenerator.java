@@ -23,10 +23,7 @@ public class JarGenerator {
             System.out.println(line);
         }
         int exitCode = process.waitFor();
-        System.out.println("命令执行结束，退出码：" + exitCode);
+        System.out.println("mvn命令执行结束，退出码：" + exitCode);
     }
 
-    public static void main(String[] args) throws IOException, InterruptedException {
-        doGenerate("/Users/fangchenxin/Desktop/yupi/code/代码生成/play-generator/play-generator-basic");
-    }
 }

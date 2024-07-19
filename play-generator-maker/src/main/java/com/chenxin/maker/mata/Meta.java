@@ -1,5 +1,6 @@
 package com.chenxin.maker.mata;
 
+import cn.hutool.core.date.DateUtil;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,12 +16,13 @@ import java.util.List;
 @Data
 public class Meta {
 
-    private String name;
-    private String description;
-    private String basePackage;
-    private String version;
-    private String author;
-    private String createTime;
+    private String name = "my-generator";
+    private String description = "我的模版生成器";
+    private String basePackage = "com.play";
+    private String version = "1.0";
+    private String author = "player";
+    private String createTime = DateUtil.now();
+    private Boolean isGit = false;
     private FileConfig fileConfig;
     private ModelConfig modelConfig;
 
@@ -29,6 +31,7 @@ public class Meta {
     public static class FileConfig {
         private String inputRootPath;
         private String outputRootPath;
+        private String sourceRootPath;
         private String type;
         private List<FileInfo> files;
 
