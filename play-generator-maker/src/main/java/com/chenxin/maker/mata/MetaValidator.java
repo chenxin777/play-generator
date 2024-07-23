@@ -1,7 +1,6 @@
 package com.chenxin.maker.mata;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import com.chenxin.maker.mata.enums.FileGenerateTypeEnum;
@@ -10,6 +9,7 @@ import com.chenxin.maker.mata.enums.FileTypeEnum;
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author fangchenxin
@@ -36,6 +36,15 @@ public class MetaValidator {
             return;
         }
         for (Meta.ModelConfig.ModelInfo modelInfo : models) {
+            // 有group属性，不校验
+            String groupKey = modelInfo.getGroupKey();
+            if (StrUtil.isNotEmpty(groupKey)) {
+                // 生成中间参数
+                List<Meta.ModelConfig.ModelInfo> subModelInfoList = modelInfo.getModels();
+                String allArgsStr = subModelInfoList.stream().map(subModelInfo -> String.format("\"--%s\"", subModelInfo.getFieldName())).collect(Collectors.joining(","));
+                modelInfo.setAllArgsStr(allArgsStr);
+                continue;
+            }
             String fieldName = modelInfo.getFieldName();
             if (StrUtil.isBlank(fieldName)) {
                 throw new MetaException("未填写fieldName");
@@ -69,6 +78,10 @@ public class MetaValidator {
             return;
         }
         for (Meta.FileConfig.FileInfo fileInfo : files) {
+            String type = fileInfo.getType();
+            if (FileTypeEnum.GROUP.getCode().equals(type)) {
+                continue;
+            }
             // inputPath 必填
             String inputPath = fileInfo.getInputPath();
             if (StrUtil.isBlank(inputPath)) {
@@ -78,7 +91,6 @@ public class MetaValidator {
             fileInfo.setOutputPath(StrUtil.blankToDefault(fileInfo.getOutputPath(), inputPath));
 
             // type 默认 inputPath有文件后缀(.java)，为file，否则为dir
-            String type = fileInfo.getType();
             if (StrUtil.isBlank(type)) {
                 if (StrUtil.isBlank(FileUtil.getSuffix(inputPath))) {
                     fileInfo.setType(FileTypeEnum.DIR.getCode());

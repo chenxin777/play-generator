@@ -1,3 +1,16 @@
+<#macro generateConfig indent modelInfo>
+${indent}${modelInfo.fieldName}
+
+${indent}类型: ${modelInfo.type}
+
+${indent}描述: ${modelInfo.description}
+
+${indent}默认值: ${modelInfo.defaultValue?c}
+
+${indent}缩写: <#if modelInfo.abbr ??>-${modelInfo.abbr}<#else>无</#if>
+-----------------------------------------
+</#macro>
+
 # ${name}
 
 > ${description}
@@ -17,15 +30,13 @@ generate <命令> <选项参数>
 ## 参数说明
 
 <#list modelConfig.models as modelInfo>
-${modelInfo?index + 1}） ${modelInfo.fieldName}
-
-类型: ${modelInfo.type}
-
-描述: ${modelInfo.description}
-
-默认值: ${modelInfo.defaultValue?c}
-
-缩写: -${modelInfo.abbr}
+<#if modelInfo.groupKey ??>
+<#list modelInfo.models as subModelInfo>
+<@generateConfig indent="" modelInfo=subModelInfo/>
+</#list>
+<#else>
+<@generateConfig indent="" modelInfo=modelInfo/>
+</#if>
 
 </#list>
 
