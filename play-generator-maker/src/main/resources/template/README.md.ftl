@@ -8,7 +8,7 @@ ${indent}描述: ${modelInfo.description}
 ${indent}默认值: ${modelInfo.defaultValue?c}
 
 ${indent}缩写: <#if modelInfo.abbr ??>-${modelInfo.abbr}<#else>无</#if>
------------------------------------------
+
 </#macro>
 
 # ${name}

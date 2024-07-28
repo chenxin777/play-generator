@@ -1,6 +1,5 @@
 package com.chenxin.maker.generator.file;
 
-import com.chenxin.maker.model.DataModel;
 import freemarker.template.TemplateException;
 
 import java.io.File;
@@ -13,15 +12,6 @@ import java.io.IOException;
  * @modify
  */
 public class FileGenerator {
-
-    public static void main(String[] args) throws TemplateException, IOException {
-        // 创建数据模型
-        DataModel mainTemplateConfig = new DataModel();
-        mainTemplateConfig.setAuthor("fcx");
-        mainTemplateConfig.setLoop(false);
-        mainTemplateConfig.setOutputText("结果是：");
-        doGenerator(mainTemplateConfig);
-    }
 
     public static void doGenerator(Object model) throws TemplateException, IOException {
         // 静态生成
