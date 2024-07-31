@@ -1,0 +1,32 @@
+{
+  "id": 1,
+  "fileConfig": {
+    "fileGroupConfig": {
+      "groupKey": "user",
+      "groupName": "用户文件组",
+      "condition": "needUser"
+    },
+    "files": [
+      {
+        "path": "src/main",
+        "filterConfigList": [
+          {
+            "range": "fileName",
+            "rule": "contains",
+            "value": "User"
+          }
+        ]
+      }
+    ]
+  },
+  "modelConfig": {
+    "models": [
+      {
+        "fieldName": "needUser",
+        "type": "boolean",
+        "description": "是否开启用户功能",
+        "defaultValue": true
+      }
+    ]
+  }
+}

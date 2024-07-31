@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "modelConfig": {
+    "models": [
+      {
+        "fieldName": "needEs",
+        "type": "boolean",
+        "description": "是否开启ES功能",
+        "defaultValue": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "name": "acm-template-pro-generator",
+    "description": "ACM示例模版生成器"
+  },
+  "originProjectPath": "../../../play-generator-demo-projects/springboot-init",
+  "fileConfig": {
+    "files": [
+      {
+        "path": "src/main/java/com/play/springbootinit/common"
+      }
+    ]
+  },
+  "modelConfig": {
+    "models": [
+      {
+        "fieldName": "className",
+        "type": "String",
+        "defaultValue": "BaseResponse",
+        "replaceText": "BaseResponse"
+      }
+    ]
+  }
+}
