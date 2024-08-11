@@ -1,4 +1,5 @@
 import { listGeneratorVoByPageUsingPost } from '@/services/backend/generatorController';
+import { Link } from '@@/exports';
 import { UserOutlined } from '@ant-design/icons';
 import { PageContainer, ProFormSelect, ProFormText, QueryFilter } from '@ant-design/pro-components';
 import { Avatar, Card, Flex, Image, List, message, Tabs, TabsProps, Tag } from 'antd';
@@ -147,30 +148,32 @@ const IndexPage: React.FC = () => {
         }}
         renderItem={(data) => (
           <List.Item>
-            <Card hoverable cover={<Image alt={data.name} src={data.picture} />}>
-              <Card.Meta
-                title={<a>{data.name}</a>}
-                description={
-                  <Paragraph
-                    ellipsis={{
-                      rows: 2,
-                    }}
-                    style={{ height: 44 }}
-                  >
-                    {data.description}
+            <Link to={`/generator/detail/${data.id}`}>
+              <Card hoverable cover={<Image alt={data.name} src={data.picture} />}>
+                <Card.Meta
+                  title={<a>{data.name}</a>}
+                  description={
+                    <Paragraph
+                      ellipsis={{
+                        rows: 2,
+                      }}
+                      style={{ height: 44 }}
+                    >
+                      {data.description}
+                    </Paragraph>
+                  }
+                />
+                {tagListView(data.tags)}
+                <Flex justify="space-between" align="center">
+                  <Paragraph type="secondary" style={{ fontSize: 12, alignItems: 'center' }}>
+                    {moment(data.createTime).fromNow()}
                   </Paragraph>
-                }
-              />
-              {tagListView(data.tags)}
-              <Flex justify="space-between" align="center">
-                <Paragraph type="secondary" style={{ fontSize: 12, alignItems: 'center' }}>
-                  {moment(data.createTime).fromNow()}
-                </Paragraph>
-                <div>
-                  <Avatar src={data.user?.userAvatar ?? <UserOutlined />} />
-                </div>
-              </Flex>
-            </Card>
+                  <div>
+                    <Avatar src={data.user?.userAvatar ?? <UserOutlined />} />
+                  </div>
+                </Flex>
+              </Card>
+            </Link>
           </List.Item>
         )}
       />

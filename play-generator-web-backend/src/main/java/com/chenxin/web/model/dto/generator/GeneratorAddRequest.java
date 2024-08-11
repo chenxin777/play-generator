@@ -61,6 +61,11 @@ public class GeneratorAddRequest implements Serializable {
     private Meta.ModelConfig modelConfig;
 
     /**
+     * 代码生成器产物路径
+     */
+    private String distPath;
+
+    /**
      * 状态
      */
     private Integer status;

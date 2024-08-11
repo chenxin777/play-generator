@@ -3,6 +3,7 @@ package com.chenxin.maker.generator.main;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.resource.ClassPathResource;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.ZipUtil;
 import com.chenxin.maker.generator.GitGenerator;
 import com.chenxin.maker.generator.JarGenerator;
 import com.chenxin.maker.generator.ScriptGenerator;
@@ -24,7 +25,7 @@ public class GenerateTemplate {
 
     public static final String JAVA_PATH = "src/main/java/";
 
-    public void doGenerate() throws TemplateException, IOException, InterruptedException{
+    public void doGenerate() throws TemplateException, IOException, InterruptedException {
         Meta meta = MetaManager.getMetaObject();
         // 输出根路径
         String projectPath = System.getProperty("user.dir");
@@ -60,17 +61,40 @@ public class GenerateTemplate {
         buildGit(meta, outputPath);
     }
 
+    /**
+     * @description 制作启动脚本
+     * @author fangchenxin
+     * @date 2024/8/8 15:56
+     * @param shellOutputFilePath
+     * @param jarPath 制作工具jar包路径
+     */
     protected void buildScript(String shellOutputFilePath, String jarPath) {
         ScriptGenerator.doGenerate(shellOutputFilePath, jarPath);
     }
 
+    /**
+     * @description 构建git
+     * @author fangchenxin
+     * @date 2024/8/8 15:57
+     * @param meta
+     * @param outputPath
+     */
     protected void buildGit(Meta meta, String outputPath) throws IOException, InterruptedException {
         if (meta.getIsGit()) {
             GitGenerator.doGenerate(outputPath);
         }
     }
 
-    protected void buildDist(String outputPath, String jarPath, String shellOutputFilePath, String sourceCopyDestPath) {
+    /**
+     * @description 制作精简版程序包
+     * @author fangchenxin
+     * @date 2024/8/8 15:59
+     * @param outputPath
+     * @param jarPath
+     * @param shellOutputFilePath
+     * @param sourceCopyDestPath
+     */
+    protected String buildDist(String outputPath, String jarPath, String shellOutputFilePath, String sourceCopyDestPath) {
         // 生成精简版的程序（产物包）
         String distOutputPath = outputPath + "-dist";
         // - 拷贝 jar 包
@@ -83,12 +107,26 @@ public class GenerateTemplate {
         FileUtil.copy(shellOutputFilePath + ".bat", distOutputPath, true);
         // - 拷贝源模版文件
         FileUtil.copy(sourceCopyDestPath, distOutputPath, true);
+        return distOutputPath;
     }
 
+    /**
+     * @description 制作jar包
+     * @author fangchenxin
+     * @date 2024/8/8 15:59
+     * @param outputPath
+     */
     protected void buildJar(String outputPath) throws InterruptedException, IOException {
         JarGenerator.doGenerate(outputPath);
     }
 
+    /**
+     * @description 生成代码
+     * @author fangchenxin
+     * @date 2024/8/8 16:00
+     * @param meta
+     * @param outputPath
+     */
     protected void generateCode(Meta meta, String outputPath) throws IOException, TemplateException {
         // 读取resources目录
         ClassPathResource classPathResource = new ClassPathResource("");
@@ -161,11 +199,32 @@ public class GenerateTemplate {
         DynamicFileGenerator.doGenerator(inputFilePath, outputFilePath, meta);
     }
 
+    /**
+     * @description 复制源程序
+     * @author fangchenxin
+     * @date 2024/8/8 16:01
+     * @param meta
+     * @param outputPath
+     * @return java.lang.String
+     */
     protected String copySource(Meta meta, String outputPath) {
         // 从原始模版文件路径复制到生成的代码包中
         String sourceRootPath = meta.getFileConfig().getSourceRootPath();
         String sourceCopyDestPath = outputPath + File.separator + ".source";
         FileUtil.copy(sourceRootPath, sourceCopyDestPath, false);
         return sourceCopyDestPath;
+    }
+
+    /**
+     * @description 制作压缩包
+     * @author fangchenxin
+     * @date 2024/8/8 15:15
+     * @param outputPath 产物输出路径
+     * @return java.lang.String 压缩包路径
+     */
+    protected String buildZip(String outputPath) {
+        String zipPath = outputPath + ".zip";
+        File zippedFile = ZipUtil.zip(outputPath, zipPath);
+        return zipPath;
     }
 }
