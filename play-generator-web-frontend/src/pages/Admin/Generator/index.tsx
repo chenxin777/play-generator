@@ -110,16 +110,16 @@ const GeneratorAdminPage: React.FC = () => {
       },
       hideInSearch: true,
     },
-    {
-      title: '文件配置',
-      dataIndex: 'fileConfig',
-      valueType: 'jsonCode',
-    },
-    {
-      title: '模型配置',
-      dataIndex: 'modelConfig',
-      valueType: 'jsonCode',
-    },
+    // {
+    //   title: '文件配置',
+    //   dataIndex: 'fileConfig',
+    //   valueType: 'jsonCode',
+    // },
+    // {
+    //   title: '模型配置',
+    //   dataIndex: 'modelConfig',
+    //   valueType: 'jsonCode',
+    // },
     {
       title: '产物包路径',
       dataIndex: 'distPath',

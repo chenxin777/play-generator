@@ -1,6 +1,7 @@
 import FileUploader from '@/components/FileUploader';
 import PictureUploader from '@/components/PictureUploader';
 import { COS_HOST } from '@/constants';
+import ModelConfigForm from '@/pages/Generator/Add/components/ModelConfigForm';
 import {
   addGeneratorUsingPost,
   editGeneratorUsingPost,
@@ -97,7 +98,7 @@ const GeneratorAddPage: React.FC = () => {
       const res = await editGeneratorUsingPost(values);
       if (res.data) {
         message.success('更新成功');
-        history.push(`generator/detail/${id}`);
+        history.push(`detail/${id}`);
       }
     } catch (error: any) {
       message.error('更新失败' + error.message);
@@ -162,10 +163,13 @@ const GeneratorAddPage: React.FC = () => {
             <StepsForm.StepForm
               name="modelConfig"
               title="模型配置"
-              onFinish={async () => {
+              onFinish={async (values) => {
+                console.log(values);
                 return true;
               }}
-            ></StepsForm.StepForm>
+            >
+              <ModelConfigForm formRef={formRef} oldData={oldData} />
+            </StepsForm.StepForm>
             <StepsForm.StepForm name="dist" title="生成器文件">
               <ProFormItem label="产物包" name="distPath">
                 <FileUploader biz="generator_dist" description="请上传生成器文件压缩包" />

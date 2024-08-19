@@ -68,7 +68,7 @@ public class GeneratorAddRequest implements Serializable {
     /**
      * 状态
      */
-    private Integer status;
+    private Integer status = 0;
 
     private static final long serialVersionUID = 1L;
 }

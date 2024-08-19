@@ -17,6 +17,13 @@ export default [
     hideInMenu: true,
   },
   {
+    path: '/generator/use/:id',
+    icon: 'plus',
+    component: './Generator/Use',
+    name: '生成器使用',
+    hideInMenu: true,
+  },
+  {
     path: '/generator/detail/:id',
     icon: 'plus',
     component: './Generator/Detail',
