@@ -158,6 +158,11 @@ public class GenerateTemplate {
         outputFilePath = outputBaseJavaPackagePath + File.separator + "/cli/command/GenerateCommand.java";
         DynamicFileGenerator.doGenerator(inputFilePath, outputFilePath, meta);
 
+        // cli.command.JsonGenerateCommand
+        inputFilePath = inputResourcePath + File.separator + "template/java/cli/command/JsonGenerateCommand.java.ftl";
+        outputFilePath = outputBaseJavaPackagePath + File.separator + "/cli/command/JsonGenerateCommand.java";
+        DynamicFileGenerator.doGenerator(inputFilePath, outputFilePath, meta);
+
         // cli.command.ConfigCommand
         inputFilePath = inputResourcePath + File.separator + "template/java/cli/command/ConfigCommand.java.ftl";
         outputFilePath = outputBaseJavaPackagePath + File.separator + "/cli/command/ConfigCommand.java";

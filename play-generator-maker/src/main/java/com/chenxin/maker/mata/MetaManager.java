@@ -37,8 +37,8 @@ public class MetaManager {
      * @return com.chenxin.maker.mata.Meta
      */
     private static Meta initMeta() {
-        //String metaJson = ResourceUtil.readUtf8Str("meta.json");
-        String metaJson = ResourceUtil.readUtf8Str("springboot-init-meta.json");
+        String metaJson = ResourceUtil.readUtf8Str("meta.json");
+        //String metaJson = ResourceUtil.readUtf8Str("springboot-init-meta.json");
         Meta meta = JSONUtil.toBean(metaJson, Meta.class);
         MetaValidator.doValidateAndFill(meta);
         return meta;
