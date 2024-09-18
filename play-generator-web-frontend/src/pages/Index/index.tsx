@@ -1,4 +1,4 @@
-import { listGeneratorVoByPageUsingPost } from '@/services/backend/generatorController';
+import { listGeneratorVoByPageFastUsingPost } from '@/services/backend/generatorController';
 import { Link } from '@@/exports';
 import { UserOutlined } from '@ant-design/icons';
 import { PageContainer, ProFormSelect, ProFormText, QueryFilter } from '@ant-design/pro-components';
@@ -13,19 +13,21 @@ import React, { useEffect, useState } from 'react';
  */
 const DEFAULT_PAGE_PARAMS: PageRequest = {
   current: 1,
-  pageSize: 4,
+  pageSize: 12,
   sortField: 'createTime',
   sortOrder: 'descend',
 };
 
 const IndexPage: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [dataList, setDataList] = useState<API.GeneratorVO[]>([]);
   const [total, setTotal] = useState<number>(0);
   // 搜索条件
   const [searchParams, setSearchParams] = useState<API.GeneratorQueryRequest>({
     ...DEFAULT_PAGE_PARAMS,
   });
+  // 搜索词
+  const [searchText, setSearchText] = useState<string>('');
 
   /**
    * 标签
@@ -64,7 +66,7 @@ const IndexPage: React.FC = () => {
   const doSearch = async () => {
     setLoading(true);
     try {
-      const res = await listGeneratorVoByPageUsingPost(searchParams);
+      const res = await listGeneratorVoByPageFastUsingPost(searchParams);
       setDataList(res.data?.records ?? []);
       setTotal(res.data?.total ?? 0);
     } catch (error: any) {
@@ -89,9 +91,9 @@ const IndexPage: React.FC = () => {
           allowClear
           enterButton="搜索"
           size="large"
-          value={searchParams.searchText}
+          value={searchText}
           onChange={(e) => {
-            searchParams.searchText = e.target.value;
+            setSearchText(e.target.value);
           }}
           onSearch={(value) => {
             setSearchParams({

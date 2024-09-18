@@ -168,7 +168,7 @@ const GeneratorUsePage: React.FC = () => {
             </Form>
 
             <Space size="middle">
-              <Link to={`/generator/detail/${id}}`}>
+              <Link to={`/generator/detail/${id}`}>
                 <Button>查看详情</Button>
               </Link>
               {downloadButton}

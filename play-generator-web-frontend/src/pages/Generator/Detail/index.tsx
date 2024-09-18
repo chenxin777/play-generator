@@ -74,6 +74,7 @@ const GeneratorDetailPage: React.FC = () => {
             responseType: 'blob',
           },
         );
+
         // 使用file-saver下载文件
         const fullPath = COS_HOST + data.distPath;
         saveAs(blob, fullPath.substring(fullPath.lastIndexOf('/') + 1));
