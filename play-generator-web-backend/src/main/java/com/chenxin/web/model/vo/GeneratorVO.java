@@ -1,7 +1,7 @@
 package com.chenxin.web.model.vo;
 
 import cn.hutool.json.JSONUtil;
-import com.chenxin.web.meta.Meta;
+import com.chenxin.maker.mata.Meta;
 import com.chenxin.web.model.entity.Generator;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;

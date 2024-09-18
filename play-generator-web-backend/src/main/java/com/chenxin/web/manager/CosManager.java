@@ -1,11 +1,9 @@
 package com.chenxin.web.manager;
 
+import cn.hutool.core.collection.CollUtil;
 import com.chenxin.web.config.CosClientConfig;
 import com.qcloud.cos.COSClient;
-import com.qcloud.cos.model.COSObject;
-import com.qcloud.cos.model.GetObjectRequest;
-import com.qcloud.cos.model.PutObjectRequest;
-import com.qcloud.cos.model.PutObjectResult;
+import com.qcloud.cos.model.*;
 import com.qcloud.cos.transfer.Download;
 import com.qcloud.cos.transfer.TransferManager;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +12,8 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -104,5 +104,72 @@ public class CosManager {
         return download;
     }
 
+    /**
+     * @description 删除对象
+     * @author fangchenxin
+     * @date 2024/9/9 17:04
+     * @param key
+     */
+    public void delObject(String key) {
+        cosClient.deleteObject(cosClientConfig.getBucket(), key);
+    }
+
+    /**
+     * @description 批量删除对象
+     * @author fangchenxin
+     * @date 2024/9/9 17:07
+     * @param keyList
+     * @return com.qcloud.cos.model.DeleteObjectsResult
+     */
+    public void delObjects(List<String> keyList) {
+        DeleteObjectsRequest deleteObjectsRequest = new DeleteObjectsRequest(cosClientConfig.getBucket());
+        List<DeleteObjectsRequest.KeyVersion> keyVersions = new ArrayList<>();
+        for (String key : keyList) {
+            keyVersions.add(new DeleteObjectsRequest.KeyVersion(key));
+        }
+        deleteObjectsRequest.setKeys(keyVersions);
+        DeleteObjectsResult deleteObjectsResult = cosClient.deleteObjects(deleteObjectsRequest);
+        deleteObjectsResult.getDeletedObjects().forEach(item -> System.out.println("已删除: " + item.getKey()));
+    }
+
+    /**
+     * @description 删除目录下的对象
+     * @author fangchenxin
+     * @date 2024/9/9 20:18
+     * @param delPrefix
+     */
+    public void delDir(String delPrefix) throws Exception {
+        ListObjectsRequest listObjectsRequest = new ListObjectsRequest();
+        // 设置bucket名称
+        listObjectsRequest.setBucketName(cosClientConfig.getBucket());
+        listObjectsRequest.setPrefix(delPrefix);
+        // 设置最大遍历出多少个对象
+        listObjectsRequest.setMaxKeys(1000);
+        // 保存每次列出的结果
+        ObjectListing objectListing = null;
+        do {
+            objectListing = cosClient.listObjects(listObjectsRequest);
+            List<COSObjectSummary> objectSummaries = objectListing.getObjectSummaries();
+            if (CollUtil.isEmpty(objectSummaries)) {
+                break;
+            }
+            List<DeleteObjectsRequest.KeyVersion> keyVersions = new ArrayList<>();
+            for (COSObjectSummary objectSummary : objectSummaries) {
+                keyVersions.add(new DeleteObjectsRequest.KeyVersion(objectSummary.getKey()));
+            }
+
+            DeleteObjectsRequest deleteObjectsRequest = new DeleteObjectsRequest(cosClientConfig.getBucket());
+            deleteObjectsRequest.setKeys(keyVersions);
+            DeleteObjectsResult deleteObjectsResult = cosClient.deleteObjects(deleteObjectsRequest);
+            List<DeleteObjectsResult.DeletedObject> deletedObjects = deleteObjectsResult.getDeletedObjects();
+            deletedObjects.forEach(item -> System.out.println("已删除: " + item.getKey()));
+
+            // 标记下一次开始位置
+            String nextMarker = objectListing.getNextMarker();
+            listObjectsRequest.setMarker(nextMarker);
+        } while (objectListing.isTruncated());
+
+
+    }
 
 }

@@ -1,6 +1,6 @@
 package com.chenxin.web.model.dto.generator;
 
-import com.chenxin.web.meta.Meta;
+import com.chenxin.maker.mata.Meta;
 import lombok.Data;
 
 import java.io.Serializable;
