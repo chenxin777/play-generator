@@ -31,6 +31,15 @@ public class GenerateTemplate {
         String projectPath = System.getProperty("user.dir");
         // 制作工具根路径
         String outputPath = projectPath + File.separator + "generated" + File.separator + meta.getName();
+        doGenerate(meta, outputPath);
+    }
+
+    /**
+     * @description 生成
+     * @author fangchenxin
+     * @date 2024/8/19 12:00
+     */
+    public void doGenerate(Meta meta, String outputPath) throws TemplateException, IOException, InterruptedException {
         // 生成jar包名
         String jarName = String.format("%s-%s-jar-with-dependencies.jar", meta.getName(), meta.getVersion());
         // 生成jar包路径
@@ -129,8 +138,7 @@ public class GenerateTemplate {
      */
     protected void generateCode(Meta meta, String outputPath) throws IOException, TemplateException {
         // 读取resources目录
-        ClassPathResource classPathResource = new ClassPathResource("");
-        String inputResourcePath = classPathResource.getAbsolutePath();
+        String inputResourcePath = "";
 
         // Java包的基础路径
         // com.xxx

@@ -34,8 +34,7 @@
             "inputPath": ".gitignore",
             "outputPath": ".gitignore",
             "type": "file",
-            "generateType": "static",
-            "condition": "needGit"
+            "generateType": "static"
           }
         ]
       }
